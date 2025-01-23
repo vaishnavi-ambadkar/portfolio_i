@@ -10,7 +10,15 @@ const port = 5000;
 
 // Middleware setup
 app.use(bodyParser.json());  // Parse JSON datamongodb+srv://<db_username>:<db_password>@cluster.hozl3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster
-app.use(cors());  // Allow cross-origin requests
+app.use(cors(
+    app.use(cors(
+  {
+  origin:[" "],
+  methods: ["POST","GET"],
+  credentials: true
+  }
+));
+));  // Allow cross-origin requests
 
 // MongoDB Atlas connection URI
 const dbURI = 'mongodb+srv://ambadkarvaishnavi667:Sunitaambadkar@signup.q9zwd.mongodb.net/porfolio_con?retryWrites=true&w=majority&appName=signup';
@@ -29,6 +37,10 @@ const contactSchema = new mongoose.Schema({
 
 // Create Contact model
 const Contact = mongoose.model('Contact', contactSchema);
+app.get("/",(req,res) => 
+    {
+      res.json("Hi");
+    })
 
 // POST route to handle contact form submissions
 app.post('/submit-contact', async (req, res) => {
